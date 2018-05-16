@@ -18,6 +18,10 @@ class DashboardScreen extends StatelessWidget {
               child: Text("Notifications"),
             ),
             RaisedButton(
+              onPressed: () => Navigator.pushNamed(context, "/location"),
+              child: Text("Location"),
+            ),
+            RaisedButton(
               onPressed: () {
                 Navigator.pushReplacementNamed(context, "/");
               },

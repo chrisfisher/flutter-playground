@@ -41,5 +41,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+    <key>NSFaceIDUsageDescription</key>
+    <string>Face ID can be used instead of a pin code when signing in.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need to access your location to do something...</string>
 </dict>
 </plist>

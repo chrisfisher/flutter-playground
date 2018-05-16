@@ -3,6 +3,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter_playground/routes.dart';
 import 'package:flutter_playground/models.dart';
 import 'package:flutter_playground/auth/screens/login_screen.dart';
+import 'package:flutter_playground/location/screens/location_screen.dart';
 import 'package:flutter_playground/notifications/screens/notifications_screen.dart';
 import 'package:flutter_playground/notifications/screens/view_notification_screen.dart';
 import 'package:flutter_playground/notifications/notifications_manager.dart';
@@ -47,6 +48,7 @@ class AppState extends State<App> {
                 vehicle: Vehicle(),
                 isUpdating: false,
               ),
+          Routes.location: (context) => LocationScreen(),
         },
       ),
     );

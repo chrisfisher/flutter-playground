@@ -4,6 +4,8 @@ PODS:
   - Flutter (1.0.0)
   - flutter_local_notifications (0.0.1):
     - Flutter
+  - geolocation (0.0.1):
+    - Flutter
   - local_auth (0.0.1):
     - Flutter
 
@@ -11,6 +13,7 @@ DEPENDENCIES:
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - Flutter (from `.symlinks/flutter/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
+  - geolocation (from `.symlinks/plugins/geolocation/ios`)
   - local_auth (from `.symlinks/plugins/local_auth/ios`)
 
 EXTERNAL SOURCES:
@@ -20,6 +23,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/flutter/ios"
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
+  geolocation:
+    :path: ".symlinks/plugins/geolocation/ios"
   local_auth:
     :path: ".symlinks/plugins/local_auth/ios"
 
@@ -27,8 +32,9 @@ SPEC CHECKSUMS:
   device_info: 76ce0b32e13034d1883be4a382433648f9dcee63
   Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
   flutter_local_notifications: 696a74904e0a0ab754e27a5f761da4a7f9153710
+  geolocation: 3bc7405d8efd3e757b52ce85820cb613abd896cb
   local_auth: dca7d49d2228a53db258478ee98ee19402ff0c49
 
-PODFILE CHECKSUM: 1e5af4103afd21ca5ead147d7b81d06f494f51a2
+PODFILE CHECKSUM: 063540b17b25ef1e028663f494f9648c4a7e9f90
 
 COCOAPODS: 1.5.2

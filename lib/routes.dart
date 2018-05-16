@@ -5,4 +5,5 @@ class Routes {
   static final addVehicle = "/vehicles/add";
   static final notifications = "/notifications";
   static final viewNotification = "/notifications/view";
+  static final location = "/location";
 }
