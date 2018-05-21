@@ -1,27 +1,51 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter_playground/shared/widgets/text_field.dart';
 import 'package:flutter_playground/shared/widgets/dropdown_field.dart';
 import 'package:flutter_playground/shared/widgets/switch_field.dart';
 import 'package:flutter_playground/vehicles/models.dart';
 import 'package:flutter_playground/vehicles/keys.dart';
-import 'package:flutter_playground/vehicles/selectors.dart';
-import 'package:flutter_playground/models.dart';
 
-class VehicleScreen extends StatelessWidget {
-  final Vehicle vehicle;
+class VehicleScreen extends StatefulWidget {
   final bool isUpdating;
+  final bool isLoading;
+  final Function addVehicle;
+  final Function updateVehicle;
+  final Vehicle vehicle;
 
   VehicleScreen({
-    @required this.vehicle,
     @required this.isUpdating,
-  }) : super(key: ScreenKeys.vehicle);
+    @required this.isLoading,
+    @required this.addVehicle,
+    @required this.updateVehicle,
+    this.vehicle,
+  });
+
+  @override
+  VehicleScreenState createState() => VehicleScreenState();
+}
+
+class VehicleScreenState extends State<VehicleScreen> {
+  String registration;
+  VehicleType vehicleType;
+  int odometer;
+  bool odometerRequired;
+
+  @override
+  void initState() {
+    final vehicle = widget.vehicle;
+    registration = vehicle != null ? vehicle.registration : "";
+    vehicleType = vehicle != null ? vehicle.type : null;
+    odometer = vehicle != null ? vehicle.odometer : 0;
+    odometerRequired = vehicle != null ? vehicle.odometerRequired : false;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(isUpdating ? "Edit vehicle" : "Add vehicle")),
+      appBar: AppBar(
+          title: Text(widget.isUpdating ? "Edit vehicle" : "Add vehicle")),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Form(
@@ -31,11 +55,11 @@ class VehicleScreen extends StatelessWidget {
             children: [
               TextInputField(
                 key: FieldKeys.registration,
-                initialValue: vehicle.registration,
+                initialValue: registration,
                 hint: 'ABC123',
                 label: 'Registration',
                 autofocus: true,
-                onSaved: (val) => vehicle.registration = val,
+                onSaved: (val) => registration = val,
                 validator: (val) => val.trim().isEmpty
                     ? 'Please enter a valid registration number.'
                     : null,
@@ -43,17 +67,16 @@ class VehicleScreen extends StatelessWidget {
               DropdownField(
                 key: FieldKeys.vehicleType,
                 items: vehicleTypes,
-                initialValue: vehicle.type != null ? vehicle.type : null,
+                initialValue: vehicleType != null ? vehicleType : null,
                 hint: 'Select vehicle type',
-                onSaved: (val) => vehicle.type = val,
+                onSaved: (val) => vehicleType = val,
               ),
               _buildOdometerField(),
             ],
           ),
         ),
       ),
-      floatingActionButton: ScopedModelDescendant<AppModel>(
-          builder: (context, child, model) => _buildFab(context, model)),
+      floatingActionButton: _buildFab(context),
     );
   }
 
@@ -62,11 +85,10 @@ class VehicleScreen extends StatelessWidget {
       children: [
         TextInputField(
           key: FieldKeys.odometer,
-          initialValue:
-              vehicle.odometer != null ? vehicle.odometer.toString() : '',
+          initialValue: odometer != null ? odometer.toString() : '',
           label: 'Odometer (km)',
           keyboardType: TextInputType.number,
-          onSaved: (val) => vehicle.odometer = int.parse(val),
+          onSaved: (val) => odometer = int.parse(val),
         ),
         Positioned(
           child: Text(
@@ -83,8 +105,8 @@ class VehicleScreen extends StatelessWidget {
           child: Container(
             child: SwitchField(
               key: FieldKeys.odometerRequired,
-              initialValue: vehicle.odometerRequired == true,
-              onSaved: (val) => vehicle.odometerRequired = val,
+              initialValue: odometerRequired == true,
+              onSaved: (val) => odometerRequired = val,
             ),
             width: 65.0,
           ),
@@ -95,18 +117,24 @@ class VehicleScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFab(BuildContext context, AppModel model) {
+  Widget _buildFab(BuildContext context) {
     return FloatingActionButton(
-      tooltip: isUpdating ? 'Update vehicle' : 'Add vehicle',
-      child: Icon(isUpdating ? Icons.check : Icons.add),
+      tooltip: widget.isUpdating ? 'Update vehicle' : 'Add vehicle',
+      child: Icon(widget.isUpdating ? Icons.check : Icons.add),
       onPressed: () async {
-        if (getIsPosting(model)) return;
+        if (widget.isLoading) return;
         final form = FormKeys.editVehicle.currentState;
         if (!form.validate()) return;
         form.save();
-        final success = isUpdating
-            ? await model.vehicles.updateVehicle(vehicle)
-            : await model.vehicles.addVehicle(vehicle);
+        final newVehicle = Vehicle(
+          odometer: odometer,
+          registration: registration,
+          odometerRequired: odometerRequired,
+          type: vehicleType,
+        );
+        final success = widget.isUpdating
+            ? await widget.updateVehicle(newVehicle)
+            : await widget.addVehicle(newVehicle);
         if (success) {
           Navigator.pop(context);
         }
@@ -114,3 +142,17 @@ class VehicleScreen extends StatelessWidget {
     );
   }
 }
+
+List<VehicleType> vehicleTypes = [
+  VehicleType(id: 't', title: 'Taxi'),
+  VehicleType(id: 'spsv', title: 'Small passenger service'),
+  VehicleType(id: 'lpsv', title: 'Large passenger service'),
+  VehicleType(id: 'mc', title: 'Mobile crane'),
+  VehicleType(id: 'sb', title: 'School bus'),
+  VehicleType(id: 'vrs', title: 'Vehicle recovery service'),
+  VehicleType(id: 'vh', title: 'Vintage heavy'),
+  VehicleType(id: 'hm', title: 'Heavy motor'),
+  VehicleType(id: 'gs', title: 'Goods service'),
+  VehicleType(id: 'c', title: 'Combination'),
+  VehicleType(id: 'es', title: 'Emergency service'),
+];

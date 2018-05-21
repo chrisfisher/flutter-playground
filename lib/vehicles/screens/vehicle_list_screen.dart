@@ -1,34 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_playground/vehicles/models.dart';
+import 'package:flutter_playground/vehicles/containers/vehicle_container.dart';
 
-import 'package:scoped_model/scoped_model.dart';
-import 'package:flutter_playground/models.dart';
-import 'package:flutter_playground/vehicles/screens/vehicle_screen.dart';
-import 'package:flutter_playground/vehicles/selectors.dart';
+class VehicleListScreen extends StatefulWidget {
+  final List<Vehicle> vehicles;
+  final bool isLoading;
+  final Function loadVehicles;
 
-class VehicleListScreen extends StatelessWidget {
+  VehicleListScreen({
+    @required this.vehicles,
+    @required this.isLoading,
+    @required this.loadVehicles,
+  });
+
+  @override
+  VehicleListScreenState createState() => VehicleListScreenState();
+}
+
+class VehicleListScreenState extends State<VehicleListScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    widget.loadVehicles();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Vehicles")),
-      body: ScopedModelDescendant<AppModel>(
-        builder: (context, child, model) {
-          return ListView.builder(
-            itemCount: getVehicles(model).length,
-            itemBuilder: (context, index) {
-              var vehicle = getVehicles(model)[index];
-              return ListTile(
-                title: Text(vehicle.registration),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => VehicleScreen(
-                            vehicle: vehicle,
-                            isUpdating: true,
-                          ),
-                    ),
-                  );
-                },
+      body: ListView.builder(
+        itemCount: widget.vehicles.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(widget.vehicles[index].registration),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => VehicleContainer(
+                        vehicle: widget.vehicles[index],
+                        isUpdating: true,
+                      ),
+                ),
               );
             },
           );

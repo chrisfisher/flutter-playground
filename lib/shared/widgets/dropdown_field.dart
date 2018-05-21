@@ -1,12 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-abstract class MenuItem {
-  final String id;
-  final String title;
-
-  MenuItem({@required this.title, @required this.id});
-}
+import 'package:flutter_playground/shared/models.dart';
 
 class DropdownField extends FormField<MenuItem> {
   DropdownField({
