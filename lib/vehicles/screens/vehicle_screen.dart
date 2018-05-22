@@ -5,6 +5,7 @@ import 'package:flutter_playground/shared/widgets/dropdown_field.dart';
 import 'package:flutter_playground/shared/widgets/switch_field.dart';
 import 'package:flutter_playground/vehicles/models.dart';
 import 'package:flutter_playground/vehicles/keys.dart';
+import 'package:uuid/uuid.dart';
 
 class VehicleScreen extends StatefulWidget {
   final bool isUpdating;
@@ -46,36 +47,38 @@ class VehicleScreenState extends State<VehicleScreen> {
     return Scaffold(
       appBar: AppBar(
           title: Text(widget.isUpdating ? "Edit vehicle" : "Add vehicle")),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: FormKeys.editVehicle,
-          autovalidate: false,
-          child: ListView(
-            children: [
-              TextInputField(
-                key: FieldKeys.registration,
-                initialValue: registration,
-                hint: 'ABC123',
-                label: 'Registration',
-                autofocus: true,
-                onSaved: (val) => registration = val,
-                validator: (val) => val.trim().isEmpty
-                    ? 'Please enter a valid registration number.'
-                    : null,
+      body: widget.isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Form(
+                key: FormKeys.editVehicle,
+                autovalidate: false,
+                child: ListView(
+                  children: [
+                    TextInputField(
+                      key: FieldKeys.registration,
+                      initialValue: registration,
+                      hint: 'ABC123',
+                      label: 'Registration',
+                      autofocus: true,
+                      onSaved: (val) => registration = val,
+                      validator: (val) => val.trim().isEmpty
+                          ? 'Please enter a valid registration number.'
+                          : null,
+                    ),
+                    DropdownField(
+                      key: FieldKeys.vehicleType,
+                      items: vehicleTypes,
+                      initialValue: vehicleType != null ? vehicleType : null,
+                      hint: 'Select vehicle type',
+                      onSaved: (val) => vehicleType = val,
+                    ),
+                    _buildOdometerField(),
+                  ],
+                ),
               ),
-              DropdownField(
-                key: FieldKeys.vehicleType,
-                items: vehicleTypes,
-                initialValue: vehicleType != null ? vehicleType : null,
-                hint: 'Select vehicle type',
-                onSaved: (val) => vehicleType = val,
-              ),
-              _buildOdometerField(),
-            ],
-          ),
-        ),
-      ),
+            ),
       floatingActionButton: _buildFab(context),
     );
   }
@@ -127,17 +130,16 @@ class VehicleScreenState extends State<VehicleScreen> {
         if (!form.validate()) return;
         form.save();
         final newVehicle = Vehicle(
+          id: widget.isUpdating ? widget.vehicle.id : Uuid().v4(),
           odometer: odometer,
           registration: registration,
           odometerRequired: odometerRequired,
           type: vehicleType,
         );
-        final success = widget.isUpdating
+        widget.isUpdating
             ? await widget.updateVehicle(newVehicle)
             : await widget.addVehicle(newVehicle);
-        if (success) {
-          Navigator.pop(context);
-        }
+        Navigator.pop(context);
       },
     );
   }

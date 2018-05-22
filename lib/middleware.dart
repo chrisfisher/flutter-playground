@@ -7,11 +7,13 @@ import 'package:flutter_playground/vehicles/actions.dart';
 import 'package:flutter_playground/vehicles/models.dart';
 import 'package:flutter_playground/models.dart';
 import 'dart:async';
+import 'package:uuid/uuid.dart';
 
 List<Middleware<AppState>> createMiddleware() {
   return [
     TypedMiddleware<AppState, LoadVehiclesAction>(_createLoadVehicles()),
-    TypedMiddleware<AppState, LoadVehiclesAction>(_createAddVehicle()),
+    TypedMiddleware<AppState, AddVehicleAction>(_createAddVehicle()),
+    TypedMiddleware<AppState, UpdateVehicleAction>(_createUpdateVehicle()),
   ];
 }
 
@@ -32,14 +34,36 @@ Middleware<AppState> _createAddVehicle() {
   return (Store<AppState> store, action, NextDispatcher next) async {
     next(action);
 
-    await Future.delayed(const Duration(seconds: 1));
+    try {
+      _serverVehicles.add(action.vehicle);
+      await Future.delayed(const Duration(seconds: 1));
+      store.dispatch(VehicleAddedAction());
+    } catch (e) {
+      store.dispatch(VehicleNotAddedAction());
+    }
+  };
+}
 
-    _serverVehicles.add(action.vehicle);
+Middleware<AppState> _createUpdateVehicle() {
+  return (Store<AppState> store, action, NextDispatcher next) async {
+    next(action);
+
+    try {
+      _serverVehicles
+          .where((vehicle) => action.vehicle.id != vehicle.id)
+          .toList()
+          .add(action.vehicle);
+      await Future.delayed(const Duration(seconds: 1));
+      store.dispatch(VehicleUpdatedAction());
+    } catch (e) {
+      store.dispatch(VehicleNotUpdatedAction());
+    }
   };
 }
 
 final List<Vehicle> _serverVehicles = [
   Vehicle(
+    id: Uuid().v4(),
     registration: 'FGD432',
     odometer: 50123,
     odometerRequired: true,

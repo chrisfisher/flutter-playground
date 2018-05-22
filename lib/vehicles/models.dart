@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_playground/shared/models.dart';
-import 'package:uuid/uuid.dart';
 
 class VehicleType implements MenuItem {
   final String id;
@@ -14,13 +13,14 @@ class VehicleType implements MenuItem {
 
 @immutable
 class Vehicle {
-  final String id = Uuid().v4();
+  final String id;
   final String registration;
   final VehicleType type;
   final int odometer;
   final bool odometerRequired;
 
   Vehicle({
+    this.id,
     this.registration,
     this.type,
     this.odometer,

@@ -29,25 +29,27 @@ class VehicleListScreenState extends State<VehicleListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Vehicles")),
-      body: ListView.builder(
-        itemCount: widget.vehicles.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(widget.vehicles[index].registration),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => VehicleContainer(
-                        vehicle: widget.vehicles[index],
-                        isUpdating: true,
+      body: widget.isLoading
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: widget.vehicles.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(widget.vehicles[index].registration),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => VehicleContainer(
+                              vehicle: widget.vehicles[index],
+                              isUpdating: true,
+                            ),
                       ),
-                ),
-              );
-            },
-          );
-        },
-      ),
+                    );
+                  },
+                );
+              },
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(context, "/vehicles/add");
