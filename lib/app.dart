@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
-// import 'package:redux_thunk/redux_thunk.dart';
+import 'package:redux_thunk/redux_thunk.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import 'package:flutter_playground/routes.dart';
@@ -15,7 +15,6 @@ import 'package:flutter_playground/vehicles/containers/vehicle_container.dart';
 import 'package:flutter_playground/auth/containers/login_container.dart';
 
 import 'package:flutter_playground/reducer.dart';
-import 'package:flutter_playground/middleware.dart';
 import 'package:flutter_playground/models.dart';
 
 class LogmateApp extends StatefulWidget {

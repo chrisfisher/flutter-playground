@@ -39,7 +39,7 @@ class _ViewModel {
       vehicles: store.state.vehicles.vehicles,
       isLoading: store.state.vehicles.isLoading,
       loadVehicles: () {
-        store.dispatch(LoadVehiclesAction());
+        store.dispatch(loadVehiclesThunk());
       },
     );
   }

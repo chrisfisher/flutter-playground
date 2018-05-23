@@ -11,19 +11,19 @@ VehiclesState vehiclesReducer(VehiclesState state, action) {
 
 final _vehicles = combineReducers<List<Vehicle>>([
   TypedReducer<List<Vehicle>, VehiclesLoadedAction>(_loadVehicles),
-  TypedReducer<List<Vehicle>, AddVehicleAction>(_addVehicle),
-  TypedReducer<List<Vehicle>, UpdateVehicleAction>(_updateVehicle),
+  TypedReducer<List<Vehicle>, VehicleAddedAction>(_addVehicle),
+  TypedReducer<List<Vehicle>, VehicleUpdatedAction>(_updateVehicle),
 ]);
 
 List<Vehicle> _loadVehicles(List<Vehicle> state, VehiclesLoadedAction action) {
   return action.vehicles;
 }
 
-List<Vehicle> _addVehicle(List<Vehicle> state, AddVehicleAction action) {
+List<Vehicle> _addVehicle(List<Vehicle> state, VehicleAddedAction action) {
   return List.from(state)..add(action.vehicle);
 }
 
-List<Vehicle> _updateVehicle(List<Vehicle> state, UpdateVehicleAction action) {
+List<Vehicle> _updateVehicle(List<Vehicle> state, VehicleUpdatedAction action) {
   return state.where((vehicle) => vehicle.id != action.vehicle.id).toList()
     ..add(action.vehicle);
 }

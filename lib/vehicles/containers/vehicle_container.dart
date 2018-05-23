@@ -48,10 +48,10 @@ class _ViewModel {
     return _ViewModel(
       isLoading: store.state.vehicles.isLoading,
       addVehicle: (Vehicle vehicle) {
-        store.dispatch(AddVehicleAction(vehicle));
+        store.dispatch(addVehicleThunk(vehicle));
       },
       updateVehicle: (Vehicle vehicle) {
-        store.dispatch(UpdateVehicleAction(vehicle));
+        store.dispatch(updateVehicleThunk(vehicle));
       },
     );
   }

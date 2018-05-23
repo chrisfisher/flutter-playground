@@ -26,7 +26,7 @@ class LoginUserFailureAction {
 
 class LogoutAction {}
 
-Function startUserLoginFlow({
+Function loginUserThunk({
   String username,
   String password,
   Function onSuccess,

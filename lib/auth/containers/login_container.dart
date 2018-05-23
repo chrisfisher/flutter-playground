@@ -42,7 +42,7 @@ class _ViewModel {
         Function onSuccess,
       }) {
         store.dispatch(
-          startUserLoginFlow(
+          loginUserThunk(
             username: username,
             password: password,
             onSuccess: onSuccess,
