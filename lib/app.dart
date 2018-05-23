@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
+// import 'package:redux_thunk/redux_thunk.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import 'package:flutter_playground/routes.dart';
-import 'package:flutter_playground/auth/screens/login_screen.dart';
 import 'package:flutter_playground/location/screens/location_screen.dart';
 import 'package:flutter_playground/notifications/screens/notifications_screen.dart';
 import 'package:flutter_playground/notifications/screens/view_notification_screen.dart';
@@ -12,6 +12,7 @@ import 'package:flutter_playground/notifications/notifications_manager.dart';
 import 'package:flutter_playground/dashboard/screens/dashboard_screen.dart';
 import 'package:flutter_playground/vehicles/containers/vehicle_list_container.dart';
 import 'package:flutter_playground/vehicles/containers/vehicle_container.dart';
+import 'package:flutter_playground/auth/containers/login_container.dart';
 
 import 'package:flutter_playground/reducer.dart';
 import 'package:flutter_playground/middleware.dart';
@@ -28,7 +29,7 @@ class LogmateAppState extends State<LogmateApp> {
   final store = Store<AppState>(
     appReducer,
     initialState: AppState.initialState(),
-    middleware: createMiddleware(),
+    middleware: [thunkMiddleware],
   );
 
   @override
@@ -49,7 +50,7 @@ class LogmateAppState extends State<LogmateApp> {
           brightness: Brightness.dark,
         ),
         routes: {
-          Routes.login: (context) => LoginScreen(),
+          Routes.login: (context) => LoginContainer(),
           Routes.dashboard: (context) => DashboardScreen(),
           Routes.notifications: (context) =>
               NotificationsScreen(notificationsManager: notificationsManager),

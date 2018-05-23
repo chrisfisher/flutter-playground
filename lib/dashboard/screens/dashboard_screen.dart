@@ -23,7 +23,7 @@ class DashboardScreen extends StatelessWidget {
             ),
             RaisedButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, "/");
+                Navigator.pop(context);
               },
               child: Text("Sign out"),
             ),

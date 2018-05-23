@@ -9,6 +9,20 @@ import 'package:flutter_playground/models.dart';
 import 'dart:async';
 import 'package:uuid/uuid.dart';
 
+typedef dynamic ThunkAction<State>(Store<State> store);
+
+void thunkMiddleware<State>(
+  Store<State> store,
+  dynamic action,
+  NextDispatcher next,
+) {
+  if (action is ThunkAction<State>) {
+    return action(store);
+  } else {
+    next(action);
+  }
+}
+
 List<Middleware<AppState>> createMiddleware() {
   return [
     TypedMiddleware<AppState, LoadVehiclesAction>(_createLoadVehicles()),
