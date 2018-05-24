@@ -1,6 +1,6 @@
 import 'package:redux/redux.dart';
 import 'package:flutter_playground/auth/actions.dart';
-import 'package:flutter_playground/auth/models.dart';
+import 'package:flutter_playground/auth/models/auth_state.dart';
 
 AuthState authReducer(AuthState state, action) {
   return AuthState(

@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:flutter_playground/vehicles/models/vehicles_state.dart';
-import 'package:flutter_playground/auth/models.dart';
+import 'package:flutter_playground/auth/models/auth_state.dart';
 
 @immutable
 class AppState {
