@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:redux/redux.dart';
 import 'package:uuid/uuid.dart';
-import 'package:flutter_playground/vehicles/models.dart';
+import 'package:flutter_playground/vehicles/models/vehicle.dart';
 import 'package:flutter_playground/models.dart';
+import 'package:flutter_playground/api.dart';
 
 final List<Vehicle> _serverVehicles = [
   Vehicle(
@@ -32,6 +33,7 @@ class VehiclesLoadedAction {
 
 Function loadVehiclesThunk() {
   return (Store<AppState> store) async {
+    final vehicles = await fetchVehicles();
     store.dispatch(LoadVehiclesAction());
     try {
       await Future.delayed(Duration(seconds: 1));

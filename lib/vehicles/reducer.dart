@@ -1,6 +1,7 @@
 import 'package:redux/redux.dart';
 import 'package:flutter_playground/vehicles/actions.dart';
-import 'package:flutter_playground/vehicles/models.dart';
+import 'package:flutter_playground/vehicles/models/vehicle.dart';
+import 'package:flutter_playground/vehicles/models/vehicles_state.dart';
 
 VehiclesState vehiclesReducer(VehiclesState state, action) {
   return VehiclesState(

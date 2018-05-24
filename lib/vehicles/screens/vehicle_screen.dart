@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_playground/shared/widgets/text_field.dart';
 import 'package:flutter_playground/shared/widgets/dropdown_field.dart';
 import 'package:flutter_playground/shared/widgets/switch_field.dart';
-import 'package:flutter_playground/vehicles/models.dart';
+import 'package:flutter_playground/vehicles/models/vehicle.dart';
 import 'package:flutter_playground/vehicles/keys.dart';
 import 'package:uuid/uuid.dart';
 

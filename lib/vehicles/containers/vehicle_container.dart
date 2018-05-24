@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_playground/vehicles/actions.dart';
-import 'package:flutter_playground/vehicles/models.dart';
-import 'package:flutter_playground/models.dart';
 import 'package:flutter_playground/vehicles/screens/vehicle_screen.dart';
+import 'package:flutter_playground/vehicles/models/vehicle.dart';
+import 'package:flutter_playground/models.dart';
 
 class VehicleContainer extends StatelessWidget {
   final bool isUpdating;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_playground/vehicles/models.dart';
+import 'package:flutter_playground/vehicles/models/vehicle.dart';
 import 'package:flutter_playground/vehicles/containers/vehicle_container.dart';
 
 class VehicleListScreen extends StatefulWidget {

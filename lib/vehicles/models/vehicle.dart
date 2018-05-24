@@ -27,16 +27,3 @@ class Vehicle {
     this.odometerRequired,
   });
 }
-
-@immutable
-class VehiclesState {
-  final List<Vehicle> vehicles;
-  final bool isLoading;
-
-  VehiclesState({@required this.vehicles, @required this.isLoading});
-
-  factory VehiclesState.initialState() => VehiclesState(
-        vehicles: [],
-        isLoading: false,
-      );
-}
