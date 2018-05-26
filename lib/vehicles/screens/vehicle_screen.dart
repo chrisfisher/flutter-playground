@@ -4,6 +4,7 @@ import 'package:flutter_playground/shared/widgets/text_field.dart';
 import 'package:flutter_playground/shared/widgets/dropdown_field.dart';
 import 'package:flutter_playground/shared/widgets/switch_field.dart';
 import 'package:flutter_playground/vehicles/models/vehicle.dart';
+import 'package:flutter_playground/vehicles/models/vehicle_type.dart';
 import 'package:flutter_playground/vehicles/keys.dart';
 import 'package:uuid/uuid.dart';
 
@@ -30,15 +31,14 @@ class VehicleScreenState extends State<VehicleScreen> {
   String registration;
   VehicleType vehicleType;
   int odometer;
-  bool odometerRequired;
+  bool roadUserCharges;
 
   @override
   void initState() {
     final vehicle = widget.vehicle;
     registration = vehicle != null ? vehicle.registration : "";
-    vehicleType = vehicle != null ? vehicle.type : null;
     odometer = vehicle != null ? vehicle.odometer : 0;
-    odometerRequired = vehicle != null ? vehicle.odometerRequired : false;
+    roadUserCharges = vehicle != null ? vehicle.roadUserCharges : false;
     super.initState();
   }
 
@@ -107,9 +107,9 @@ class VehicleScreenState extends State<VehicleScreen> {
         Positioned(
           child: Container(
             child: SwitchField(
-              key: FieldKeys.odometerRequired,
-              initialValue: odometerRequired == true,
-              onSaved: (val) => odometerRequired = val,
+              key: FieldKeys.roadUserCharges,
+              initialValue: roadUserCharges == true,
+              onSaved: (val) => roadUserCharges = val,
             ),
             width: 65.0,
           ),
@@ -133,8 +133,7 @@ class VehicleScreenState extends State<VehicleScreen> {
           id: widget.isUpdating ? widget.vehicle.id : Uuid().v4(),
           odometer: odometer,
           registration: registration,
-          odometerRequired: odometerRequired,
-          type: vehicleType,
+          roadUserCharges: roadUserCharges,
         );
         widget.isUpdating
             ? await widget.updateVehicle(newVehicle)

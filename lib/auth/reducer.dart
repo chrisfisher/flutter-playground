@@ -1,12 +1,13 @@
 import 'package:redux/redux.dart';
 import 'package:flutter_playground/auth/actions.dart';
 import 'package:flutter_playground/auth/models/auth_state.dart';
+import 'package:flutter_playground/auth/models/token_data.dart';
 
 AuthState authReducer(AuthState state, action) {
   return AuthState(
     errorMessage: _errorMessage(state.errorMessage, action),
     isLoading: _isLoading(state.isLoading, action),
-    token: _token(state.token, action),
+    tokenData: _tokenData(state.tokenData, action),
   );
 }
 
@@ -19,14 +20,14 @@ String _setErrorMessage(String state, action) => action.errorMessage;
 
 String _clearErrorMessage(String state, action) => null;
 
-final _token = combineReducers<String>([
-  TypedReducer<String, LoginUserSuccessAction>(_setToken),
-  TypedReducer<String, LogoutAction>(_clearToken),
+final _tokenData = combineReducers<TokenData>([
+  TypedReducer<TokenData, LoginUserSuccessAction>(_setTokenData),
+  TypedReducer<TokenData, LogoutAction>(_clearTokenData),
 ]);
 
-String _setToken(String state, action) => action.token;
+TokenData _setTokenData(TokenData state, action) => action.tokenData;
 
-String _clearToken(String state, action) => null;
+TokenData _clearTokenData(TokenData state, action) => null;
 
 final _isLoading = combineReducers<bool>([
   TypedReducer<bool, LoginUserAction>(_setIsLoading),

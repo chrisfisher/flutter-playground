@@ -1,22 +1,8 @@
 import 'dart:async';
 import 'package:redux/redux.dart';
-import 'package:uuid/uuid.dart';
 import 'package:flutter_playground/vehicles/models/vehicle.dart';
 import 'package:flutter_playground/models.dart';
 import 'package:flutter_playground/api.dart';
-
-final List<Vehicle> _serverVehicles = [
-  Vehicle(
-    id: Uuid().v4(),
-    registration: 'FGD432',
-    odometer: 50123,
-    odometerRequired: true,
-    type: VehicleType(
-      title: 'Small passenger service',
-      id: 'spsv',
-    ),
-  ),
-];
 
 class LoadVehiclesAction {}
 
@@ -33,11 +19,12 @@ class VehiclesLoadedAction {
 
 Function loadVehiclesThunk() {
   return (Store<AppState> store) async {
-    final vehicles = await fetchVehicles();
+    final accessToken = store.state.auth.tokenData.accessToken;
+    final vehicles = await fetchVehicles(accessToken);
     store.dispatch(LoadVehiclesAction());
     try {
       await Future.delayed(Duration(seconds: 1));
-      store.dispatch(VehiclesLoadedAction(_serverVehicles));
+      store.dispatch(VehiclesLoadedAction(vehicles));
     } catch (e) {
       store.dispatch(VehiclesNotLoadedAction());
     }
@@ -61,7 +48,6 @@ Function addVehicleThunk(Vehicle vehicle) {
   return (Store<AppState> store) async {
     store.dispatch(AddVehicleAction());
     try {
-      _serverVehicles.add(vehicle);
       await Future.delayed(const Duration(seconds: 1));
       store.dispatch(VehicleAddedAction(vehicle));
     } catch (e) {
@@ -87,7 +73,6 @@ Function updateVehicleThunk(Vehicle vehicle) {
   return (Store<AppState> store) async {
     store.dispatch(UpdateVehicleAction());
     try {
-      _serverVehicles.where((v) => vehicle.id != v.id).toList().add(vehicle);
       await Future.delayed(const Duration(seconds: 1));
       store.dispatch(VehicleUpdatedAction(vehicle));
     } catch (e) {

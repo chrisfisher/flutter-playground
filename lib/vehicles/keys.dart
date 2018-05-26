@@ -13,5 +13,5 @@ class FieldKeys {
   static final registration = GlobalKey<FormFieldState<String>>();
   static final vehicleType = GlobalKey<FormFieldState<String>>();
   static final odometer = GlobalKey<FormFieldState<String>>();
-  static final odometerRequired = GlobalKey<FormFieldState<bool>>();
+  static final roadUserCharges = GlobalKey<FormFieldState<bool>>();
 }

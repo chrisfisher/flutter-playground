@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'token.g.dart';
+part 'token_data.g.dart';
 
 @JsonSerializable()
-class Token extends Object with _$TokenSerializerMixin {
+class TokenData extends Object with _$TokenDataSerializerMixin {
   @JsonKey(name: 'access_token')
   final String accessToken;
   @JsonKey(name: 'refresh_token')
@@ -15,7 +15,7 @@ class Token extends Object with _$TokenSerializerMixin {
   @JsonKey(name: 'token_type')
   final String tokenType;
 
-  Token({
+  TokenData({
     this.accessToken,
     this.refreshToken,
     this.expiresIn,
@@ -23,7 +23,8 @@ class Token extends Object with _$TokenSerializerMixin {
     this.tokenType,
   });
 
-  factory Token.fromJson(Map<String, dynamic> json) => _$TokenFromJson(json);
+  factory TokenData.fromJson(Map<String, dynamic> json) =>
+      _$TokenDataFromJson(json);
 }
 
 @JsonSerializable()

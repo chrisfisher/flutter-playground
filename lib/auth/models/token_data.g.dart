@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'token.dart';
+part of 'token_data.dart';
 
 // **************************************************************************
 // Generator: JsonSerializableGenerator
 // **************************************************************************
 
-Token _$TokenFromJson(Map<String, dynamic> json) => new Token(
+TokenData _$TokenDataFromJson(Map<String, dynamic> json) => new TokenData(
     accessToken: json['access_token'] as String,
     refreshToken: json['refresh_token'] as String,
     expiresIn: json['expires_in'] as int,
@@ -15,7 +15,7 @@ Token _$TokenFromJson(Map<String, dynamic> json) => new Token(
         : new User.fromJson(json['current_user'] as Map<String, dynamic>),
     tokenType: json['token_type'] as String);
 
-abstract class _$TokenSerializerMixin {
+abstract class _$TokenDataSerializerMixin {
   String get accessToken;
   String get refreshToken;
   int get expiresIn;
