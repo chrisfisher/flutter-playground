@@ -2,20 +2,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/shared/models.dart';
 
-class DropdownField extends FormField<MenuItem> {
+class DropdownField extends FormField<String> {
   DropdownField({
     Key key,
-    MenuItem initialValue,
-    List<MenuItem> items,
+    String initialValue,
+    Map<String, MenuItem> itemMap,
     String hint,
     Function onSaved,
   }) : super(
           key: key,
-          initialValue: initialValue != null
-              ? items.firstWhere((item) => item.id == initialValue.id)
-              : null,
+          initialValue: initialValue,
           onSaved: onSaved,
-          builder: (FormFieldState<MenuItem> field) {
+          builder: (FormFieldState<String> field) {
             return Container(
               padding: EdgeInsets.only(top: 12.0),
               child: Column(
@@ -26,27 +24,27 @@ class DropdownField extends FormField<MenuItem> {
                     child: DropdownButtonHideUnderline(
                       child: ButtonTheme(
                         alignedDropdown: true,
-                        child: DropdownButton<MenuItem>(
+                        child: DropdownButton<String>(
                           value: field.value,
-                          items: items.map((MenuItem item) {
-                            return DropdownMenuItem<MenuItem>(
+                          items: itemMap.keys.map((String item) {
+                            return DropdownMenuItem<String>(
                               value: item,
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    item.title,
+                                    itemMap[item].title,
                                     style: TextStyle(
                                       fontSize: 20.0,
                                     ),
                                   ),
-                                  item.id != null
+                                  itemMap[item].id != null
                                       ? Container(
                                           margin: EdgeInsets.symmetric(
                                               horizontal: 6.0),
                                           padding: EdgeInsets.all(6.0),
-                                          child: Text(item.id),
+                                          child: Text(itemMap[item].id),
                                           decoration: BoxDecoration(
                                             color: Colors.blueAccent,
                                             borderRadius:

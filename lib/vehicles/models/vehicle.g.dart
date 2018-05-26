@@ -9,6 +9,7 @@ part of 'vehicle.dart';
 Vehicle _$VehicleFromJson(Map<String, dynamic> json) => new Vehicle(
     id: json['id'] as String,
     state: json['state'] as String,
+    type: json['type'] as String,
     odometer: json['odometer'] as int,
     registration: json['registration'] as String,
     description: json['description'] as String,
@@ -21,6 +22,7 @@ Vehicle _$VehicleFromJson(Map<String, dynamic> json) => new Vehicle(
 abstract class _$VehicleSerializerMixin {
   String get id;
   String get state;
+  String get type;
   int get odometer;
   String get registration;
   String get description;
@@ -32,6 +34,7 @@ abstract class _$VehicleSerializerMixin {
   Map<String, dynamic> toJson() => <String, dynamic>{
         'id': id,
         'state': state,
+        'type': type,
         'odometer': odometer,
         'registration': registration,
         'description': description,

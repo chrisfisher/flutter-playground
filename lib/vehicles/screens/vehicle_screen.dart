@@ -29,7 +29,7 @@ class VehicleScreen extends StatefulWidget {
 
 class VehicleScreenState extends State<VehicleScreen> {
   String registration;
-  VehicleType vehicleType;
+  String vehicleType;
   int odometer;
   bool roadUserCharges;
 
@@ -37,6 +37,7 @@ class VehicleScreenState extends State<VehicleScreen> {
   void initState() {
     final vehicle = widget.vehicle;
     registration = vehicle != null ? vehicle.registration : "";
+    vehicleType = vehicle != null ? vehicle.type : null;
     odometer = vehicle != null ? vehicle.odometer : 0;
     roadUserCharges = vehicle != null ? vehicle.roadUserCharges : false;
     super.initState();
@@ -69,7 +70,7 @@ class VehicleScreenState extends State<VehicleScreen> {
                     ),
                     DropdownField(
                       key: FieldKeys.vehicleType,
-                      items: vehicleTypes,
+                      itemMap: vehicleTypeMap,
                       initialValue: vehicleType != null ? vehicleType : null,
                       hint: 'Select vehicle type',
                       onSaved: (val) => vehicleType = val,
@@ -134,6 +135,8 @@ class VehicleScreenState extends State<VehicleScreen> {
           odometer: odometer,
           registration: registration,
           roadUserCharges: roadUserCharges,
+          type: vehicleType,
+          operatorId: '59ed7188-4389-476b-849c-48ac85318967',
         );
         widget.isUpdating
             ? await widget.updateVehicle(newVehicle)
@@ -144,16 +147,53 @@ class VehicleScreenState extends State<VehicleScreen> {
   }
 }
 
-List<VehicleType> vehicleTypes = [
-  VehicleType(id: 't', title: 'Taxi'),
-  VehicleType(id: 'spsv', title: 'Small passenger service'),
-  VehicleType(id: 'lpsv', title: 'Large passenger service'),
-  VehicleType(id: 'mc', title: 'Mobile crane'),
-  VehicleType(id: 'sb', title: 'School bus'),
-  VehicleType(id: 'vrs', title: 'Vehicle recovery service'),
-  VehicleType(id: 'vh', title: 'Vintage heavy'),
-  VehicleType(id: 'hm', title: 'Heavy motor'),
-  VehicleType(id: 'gs', title: 'Goods service'),
-  VehicleType(id: 'c', title: 'Combination'),
-  VehicleType(id: 'es', title: 'Emergency service'),
-];
+Map<String, VehicleType> vehicleTypeMap = {
+  'large_passenger_service': VehicleType(
+    id: 'lpsv',
+    title: 'Large passenger service',
+  ),
+  'goods_service': VehicleType(
+    id: 'gs',
+    title: 'Goods service',
+  ),
+  'combination': VehicleType(
+    id: 'c',
+    title: 'Combination',
+  ),
+  'heavy_motor': VehicleType(
+    id: 'hm',
+    title: 'Heavy motor',
+  ),
+  'vintage_heavy': VehicleType(
+    id: 'vh',
+    title: 'Vintage heavy',
+  ),
+  'taxi': VehicleType(
+    id: 't',
+    title: 'Taxi',
+  ),
+  'school_bus': VehicleType(
+    id: 'sb',
+    title: 'School bus',
+  ),
+  'mobile_crane': VehicleType(
+    id: 'mc',
+    title: 'Mobile crane',
+  ),
+  'vehicle_recovery_service': VehicleType(
+    id: 'vrs',
+    title: 'Vehicle recovery service',
+  ),
+  'small_passenger_service': VehicleType(
+    id: 'spsv',
+    title: 'Small passenger service',
+  ),
+  'emergency_service': VehicleType(
+    id: 'es',
+    title: 'Emergency service',
+  ),
+  'trailer': VehicleType(
+    id: 'tr',
+    title: 'Trailer',
+  ),
+};
