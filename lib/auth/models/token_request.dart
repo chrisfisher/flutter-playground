@@ -24,11 +24,3 @@ class TokenRequest extends Object with _$TokenRequestSerializerMixin {
   factory TokenRequest.fromJson(Map<String, dynamic> json) =>
       _$TokenRequestFromJson(json);
 }
-
-// {
-// "client_id":"ccb40da5-0dc8-440e-b69a-fa4082f1883d",
-// "client_secret":"83ef5537-a664-46b9-8837-2d01c1669e15",
-// "grant_type":"password",
-// "username":"duncan@employed.com",
-// "password":"password"
-// }
