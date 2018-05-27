@@ -9,14 +9,22 @@ const String baseUrl = "http://localhost:8081/api/v1/";
 
 Uri buildUri(String path) => Uri.parse(baseUrl + path);
 
-Future<http.Response> get(String path, {String accessToken}) async {
-  await Future.delayed(const Duration(seconds: 1));
-  Uri uri = buildUri(path);
-  Map<String, String> headers = {};
+Map<String, String> buildHeaders(String accessToken) {
+  Map<String, String> headers = {
+    "Content-type": "application/json",
+  };
   if (accessToken != null) {
     headers["Authorization"] = "Bearer " + accessToken;
   }
-  return http.get(uri, headers: headers);
+  return headers;
+}
+
+Future<http.Response> get(String path, {String accessToken}) async {
+  await Future.delayed(const Duration(seconds: 1));
+  Uri uri = buildUri(path);
+  Map<String, String> headers = buildHeaders(accessToken);
+  http.Response response = await http.get(uri, headers: headers);
+  return response;
 }
 
 Future<http.Response> post(
@@ -26,13 +34,21 @@ Future<http.Response> post(
 }) async {
   await Future.delayed(const Duration(seconds: 1));
   Uri uri = Uri.parse(baseUrl + path);
-  Map<String, String> headers = {
-    "Content-type": "application/json",
-  };
-  if (accessToken != null) {
-    headers["Authorization"] = "Bearer " + accessToken;
-  }
-  return http.post(uri, body: body, headers: headers);
+  Map<String, String> headers = buildHeaders(accessToken);
+  http.Response response = await http.post(uri, body: body, headers: headers);
+  return response;
+}
+
+Future<http.Response> put(
+  String path, {
+  String accessToken,
+  String body,
+}) async {
+  await Future.delayed(const Duration(seconds: 1));
+  Uri uri = Uri.parse(baseUrl + path);
+  Map<String, String> headers = buildHeaders(accessToken);
+  http.Response response = await http.put(uri, body: body, headers: headers);
+  return response;
 }
 
 String encodeJson(Object obj) => json.encode(obj);
@@ -62,10 +78,25 @@ Future<List<Vehicle>> fetchVehicles(String accessToken) async {
 Future<Vehicle> addVehicle(String accessToken, Vehicle vehicle) async {
   String body = encodeJson(vehicle);
   final response = await post("vehicles", accessToken: accessToken, body: body);
-  if (response.statusCode != 200) {
+  if (response.statusCode != 201) {
     return null;
   }
   final jsonObject = decodeJsonObject(response.body);
   final addedVehicle = Vehicle.fromJson(jsonObject);
   return addedVehicle;
+}
+
+Future<Vehicle> updateVehicle(String accessToken, Vehicle vehicle) async {
+  String body = encodeJson(vehicle);
+  final response = await put(
+    "vehicles/" + vehicle.id,
+    accessToken: accessToken,
+    body: body,
+  );
+  if (response.statusCode != 200) {
+    return null;
+  }
+  final jsonObject = decodeJsonObject(response.body);
+  final updatedVehicle = Vehicle.fromJson(jsonObject);
+  return updatedVehicle;
 }

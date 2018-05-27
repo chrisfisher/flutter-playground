@@ -4,7 +4,6 @@ description: A new Flutter project.
 dependencies:
   cupertino_icons: ^0.1.0
   scoped_model: ^0.2.0
-  uuid: ^1.0.0
   local_auth: ^0.2.0
   device_info: ^0.2.0
   flutter_local_notifications: ^0.2.2

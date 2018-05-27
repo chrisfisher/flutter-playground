@@ -18,8 +18,8 @@ class VehiclesLoadedAction {
 
 Function loadVehiclesThunk() {
   return (Store<AppState> store) async {
+    store.dispatch(LoadVehiclesAction());
     try {
-      store.dispatch(LoadVehiclesAction());
       final accessToken = store.state.auth.tokenData.accessToken;
       final vehicles = await fetchVehicles(accessToken);
       store.dispatch(VehiclesLoadedAction(vehicles));
@@ -44,11 +44,11 @@ class VehicleAddedAction {
 
 Function addVehicleThunk(Vehicle vehicle) {
   return (Store<AppState> store) async {
+    store.dispatch(AddVehicleAction());
     try {
-      store.dispatch(AddVehicleAction());
       final accessToken = store.state.auth.tokenData.accessToken;
-      await addVehicle(accessToken, vehicle);
-      store.dispatch(VehicleAddedAction(vehicle));
+      final addedVehicle = await addVehicle(accessToken, vehicle);
+      store.dispatch(VehicleAddedAction(addedVehicle));
     } catch (e) {
       store.dispatch(VehicleNotAddedAction());
     }
@@ -72,7 +72,9 @@ Function updateVehicleThunk(Vehicle vehicle) {
   return (Store<AppState> store) async {
     store.dispatch(UpdateVehicleAction());
     try {
-      store.dispatch(VehicleUpdatedAction(vehicle));
+      final accessToken = store.state.auth.tokenData.accessToken;
+      final updatedVehicle = await updateVehicle(accessToken, vehicle);
+      store.dispatch(VehicleUpdatedAction(updatedVehicle));
     } catch (e) {
       store.dispatch(VehicleNotUpdatedAction());
     }

@@ -12,6 +12,7 @@ class TextInputField extends FormField<String> {
     TextInputType keyboardType,
     bool autofocus = false,
     bool autocorrect = false,
+    bool enabled = true,
   }) : super(
           builder: (FormFieldState<String> field) {
             return Container(
@@ -30,6 +31,7 @@ class TextInputField extends FormField<String> {
                 validator: validator,
                 onSaved: onSaved,
                 style: TextStyle(fontSize: 20.0),
+                enabled: enabled,
               ),
             );
           },

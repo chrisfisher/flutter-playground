@@ -6,7 +6,6 @@ import 'package:flutter_playground/shared/widgets/switch_field.dart';
 import 'package:flutter_playground/vehicles/models/vehicle.dart';
 import 'package:flutter_playground/vehicles/models/vehicle_type.dart';
 import 'package:flutter_playground/vehicles/keys.dart';
-import 'package:uuid/uuid.dart';
 
 class VehicleScreen extends StatefulWidget {
   final bool isUpdating;
@@ -28,19 +27,20 @@ class VehicleScreen extends StatefulWidget {
 }
 
 class VehicleScreenState extends State<VehicleScreen> {
-  String registration;
-  String vehicleType;
-  int odometer;
-  bool roadUserCharges;
+  Vehicle vehicle;
 
   @override
   void initState() {
-    final vehicle = widget.vehicle;
-    registration = vehicle != null ? vehicle.registration : "";
-    vehicleType = vehicle != null ? vehicle.type : null;
-    odometer = vehicle != null ? vehicle.odometer : 0;
-    roadUserCharges = vehicle != null ? vehicle.roadUserCharges : false;
     super.initState();
+    vehicle = !widget.isUpdating
+        ? Vehicle(operatorId: '59ed7188-4389-476b-849c-48ac85318967')
+        : widget.vehicle.copyWith(
+            registration: widget.vehicle.registration,
+            odometer: widget.vehicle.odometer,
+            type: widget.vehicle.type,
+            operatorId: widget.vehicle.operatorId,
+            roadCharges: widget.vehicle.roadCharges,
+          );
   }
 
   @override
@@ -59,11 +59,13 @@ class VehicleScreenState extends State<VehicleScreen> {
                   children: [
                     TextInputField(
                       key: FieldKeys.registration,
-                      initialValue: registration,
+                      initialValue: vehicle.registration,
                       hint: 'ABC123',
                       label: 'Registration',
-                      autofocus: true,
-                      onSaved: (val) => registration = val,
+                      autofocus: !widget.isUpdating,
+                      enabled: !widget.isUpdating,
+                      onSaved: (val) =>
+                          vehicle = vehicle.copyWith(registration: val),
                       validator: (val) => val.trim().isEmpty
                           ? 'Please enter a valid registration number.'
                           : null,
@@ -71,9 +73,9 @@ class VehicleScreenState extends State<VehicleScreen> {
                     DropdownField(
                       key: FieldKeys.vehicleType,
                       itemMap: vehicleTypeMap,
-                      initialValue: vehicleType != null ? vehicleType : null,
+                      initialValue: vehicle.type,
                       hint: 'Select vehicle type',
-                      onSaved: (val) => vehicleType = val,
+                      onSaved: (val) => vehicle = vehicle.copyWith(type: val),
                     ),
                     _buildOdometerField(),
                   ],
@@ -89,10 +91,12 @@ class VehicleScreenState extends State<VehicleScreen> {
       children: [
         TextInputField(
           key: FieldKeys.odometer,
-          initialValue: odometer != null ? odometer.toString() : '',
+          initialValue:
+              vehicle.odometer != null ? vehicle.odometer.toString() : "",
           label: 'Odometer (km)',
           keyboardType: TextInputType.number,
-          onSaved: (val) => odometer = int.parse(val),
+          onSaved: (val) =>
+              vehicle = vehicle.copyWith(odometer: int.parse(val)),
         ),
         Positioned(
           child: Text(
@@ -108,9 +112,9 @@ class VehicleScreenState extends State<VehicleScreen> {
         Positioned(
           child: Container(
             child: SwitchField(
-              key: FieldKeys.roadUserCharges,
-              initialValue: roadUserCharges == true,
-              onSaved: (val) => roadUserCharges = val,
+              key: FieldKeys.roadCharges,
+              initialValue: vehicle.roadCharges == true,
+              onSaved: (val) => vehicle = vehicle.copyWith(roadCharges: val),
             ),
             width: 65.0,
           ),
@@ -130,17 +134,9 @@ class VehicleScreenState extends State<VehicleScreen> {
         final form = FormKeys.editVehicle.currentState;
         if (!form.validate()) return;
         form.save();
-        final newVehicle = Vehicle(
-          id: widget.isUpdating ? widget.vehicle.id : Uuid().v4(),
-          odometer: odometer,
-          registration: registration,
-          roadUserCharges: roadUserCharges,
-          type: vehicleType,
-          operatorId: '59ed7188-4389-476b-849c-48ac85318967',
-        );
         widget.isUpdating
-            ? await widget.updateVehicle(newVehicle)
-            : await widget.addVehicle(newVehicle);
+            ? await widget.updateVehicle(vehicle)
+            : await widget.addVehicle(vehicle);
         Navigator.pop(context);
       },
     );

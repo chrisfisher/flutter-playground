@@ -4,6 +4,7 @@ part 'vehicle.g.dart';
 
 @JsonSerializable()
 class Vehicle extends Object with _$VehicleSerializerMixin {
+  @JsonKey(includeIfNull: false)
   final String id;
   final String state;
   final String type;
@@ -11,7 +12,7 @@ class Vehicle extends Object with _$VehicleSerializerMixin {
   final String registration;
   final String description;
   @JsonKey(name: 'road_user_charges')
-  final bool roadUserCharges;
+  final bool roadCharges;
   @JsonKey(name: 'vehicle_operator_id')
   final String operatorId;
   @JsonKey(name: 'vehicle_operator_first_name')
@@ -23,12 +24,12 @@ class Vehicle extends Object with _$VehicleSerializerMixin {
 
   Vehicle({
     this.id,
-    this.state,
     this.type,
     this.odometer,
     this.registration,
+    this.roadCharges,
+    this.state,
     this.description,
-    this.roadUserCharges,
     this.operatorId,
     this.operatorFirstName,
     this.operatorFamilyName,
@@ -37,4 +38,25 @@ class Vehicle extends Object with _$VehicleSerializerMixin {
 
   factory Vehicle.fromJson(Map<String, dynamic> json) =>
       _$VehicleFromJson(json);
+
+  Vehicle copyWith({
+    String type,
+    String registration,
+    int odometer,
+    bool roadCharges,
+    String operatorId,
+  }) =>
+      Vehicle(
+        type: type != null ? type : this.type,
+        registration: registration != null ? registration : this.registration,
+        odometer: odometer != null ? odometer : this.odometer,
+        roadCharges: roadCharges != null ? roadCharges : this.roadCharges,
+        operatorId: operatorId != null ? operatorId : this.operatorId,
+        id: this.id,
+        state: this.state,
+        description: this.description,
+        operatorFirstName: this.operatorFirstName,
+        operatorFamilyName: this.operatorFamilyName,
+        operatorCompanyName: this.operatorCompanyName,
+      );
 }
