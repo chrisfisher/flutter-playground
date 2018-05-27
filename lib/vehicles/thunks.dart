@@ -10,7 +10,7 @@ Function loadVehiclesThunk() {
     store.dispatch(LoadVehiclesAction());
     try {
       final accessToken = getAccessToken(store.state);
-      final vehicles = await fetchVehicles(accessToken);
+      final vehicles = await Api.fetchVehicles(accessToken);
       store.dispatch(VehiclesLoadedAction(vehicles));
     } catch (e) {
       store.dispatch(VehiclesNotLoadedAction());
@@ -23,7 +23,7 @@ Function addVehicleThunk(Vehicle vehicle) {
     store.dispatch(AddVehicleAction());
     try {
       final accessToken = getAccessToken(store.state);
-      final addedVehicle = await addVehicle(accessToken, vehicle);
+      final addedVehicle = await Api.addVehicle(accessToken, vehicle);
       store.dispatch(VehicleAddedAction(addedVehicle));
     } catch (e) {
       store.dispatch(VehicleNotAddedAction());
@@ -36,7 +36,7 @@ Function updateVehicleThunk(Vehicle vehicle) {
     store.dispatch(UpdateVehicleAction());
     try {
       final accessToken = getAccessToken(store.state);
-      final updatedVehicle = await updateVehicle(accessToken, vehicle);
+      final updatedVehicle = await Api.updateVehicle(accessToken, vehicle);
       store.dispatch(VehicleUpdatedAction(updatedVehicle));
     } catch (e) {
       store.dispatch(VehicleNotUpdatedAction());

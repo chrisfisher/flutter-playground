@@ -21,7 +21,7 @@ Function loginUserThunk({
         username: "duncan@employed.com",
         password: "password",
       );
-      TokenData tokenData = await authorize(request);
+      TokenData tokenData = await Api.authorize(request);
       await Future.delayed(Duration(seconds: 1));
       store.dispatch(LoginUserSuccessAction(
         username: username,
