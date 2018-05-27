@@ -2,8 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-
-import 'package:flutter_playground/auth/actions.dart';
+import 'package:flutter_playground/auth/thunks.dart';
 import 'package:flutter_playground/models.dart';
 import 'package:flutter_playground/auth/screens/login_screen.dart';
 

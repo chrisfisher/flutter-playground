@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_playground/models.dart';
 import 'package:flutter_playground/vehicles/models/vehicle.dart';
-import 'package:flutter_playground/vehicles/actions.dart';
+import 'package:flutter_playground/vehicles/thunks.dart';
 import 'package:flutter_playground/vehicles/screens/vehicle_list_screen.dart';
 
 class VehicleListContainer extends StatelessWidget {
