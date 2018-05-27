@@ -1,5 +1,6 @@
 import 'package:redux/redux.dart';
 import 'package:flutter_playground/models.dart';
+import 'package:flutter_playground/auth/selectors.dart';
 import 'package:flutter_playground/vehicles/actions.dart';
 import 'package:flutter_playground/vehicles/models/vehicle.dart';
 import 'package:flutter_playground/vehicles/api.dart';
@@ -8,7 +9,7 @@ Function loadVehiclesThunk() {
   return (Store<AppState> store) async {
     store.dispatch(LoadVehiclesAction());
     try {
-      final accessToken = store.state.auth.tokenData.accessToken;
+      final accessToken = getAccessToken(store.state);
       final vehicles = await fetchVehicles(accessToken);
       store.dispatch(VehiclesLoadedAction(vehicles));
     } catch (e) {
@@ -21,7 +22,7 @@ Function addVehicleThunk(Vehicle vehicle) {
   return (Store<AppState> store) async {
     store.dispatch(AddVehicleAction());
     try {
-      final accessToken = store.state.auth.tokenData.accessToken;
+      final accessToken = getAccessToken(store.state);
       final addedVehicle = await addVehicle(accessToken, vehicle);
       store.dispatch(VehicleAddedAction(addedVehicle));
     } catch (e) {
@@ -34,7 +35,7 @@ Function updateVehicleThunk(Vehicle vehicle) {
   return (Store<AppState> store) async {
     store.dispatch(UpdateVehicleAction());
     try {
-      final accessToken = store.state.auth.tokenData.accessToken;
+      final accessToken = getAccessToken(store.state);
       final updatedVehicle = await updateVehicle(accessToken, vehicle);
       store.dispatch(VehicleUpdatedAction(updatedVehicle));
     } catch (e) {
