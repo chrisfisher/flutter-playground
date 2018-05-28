@@ -13,7 +13,7 @@ import 'package:flutter_playground/dashboard/screens/dashboard_screen.dart';
 import 'package:flutter_playground/vehicles/containers/vehicle_list_container.dart';
 import 'package:flutter_playground/vehicles/containers/vehicle_container.dart';
 import 'package:flutter_playground/auth/containers/login_container.dart';
-
+import 'package:flutter_playground/api/middleware.dart';
 import 'package:flutter_playground/reducer.dart';
 import 'package:flutter_playground/models.dart';
 
@@ -28,14 +28,15 @@ class LogmateAppState extends State<LogmateApp> {
   final store = Store<AppState>(
     appReducer,
     initialState: AppState.initialState(),
-    middleware: [thunkMiddleware],
+    middleware: [thunkMiddleware, apiMiddleware],
   );
 
   @override
   void initState() {
     super.initState();
-    notificationsManager =
-        NotificationsManager(selectNotification: _selectNotification);
+    notificationsManager = NotificationsManager(
+      selectNotification: _selectNotification,
+    );
   }
 
   @override

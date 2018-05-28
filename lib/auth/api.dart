@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:flutter_playground/api.dart';
+import 'package:flutter_playground/api/api.dart';
 import 'package:flutter_playground/auth/models/token_request.dart';
 import 'package:flutter_playground/auth/models/token_data.dart';
 

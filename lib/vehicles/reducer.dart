@@ -17,16 +17,16 @@ final _vehicles = combineReducers<List<Vehicle>>([
 ]);
 
 List<Vehicle> _loadVehicles(List<Vehicle> state, VehiclesLoadedAction action) {
-  return action.vehicles;
+  return action.payload;
 }
 
 List<Vehicle> _addVehicle(List<Vehicle> state, VehicleAddedAction action) {
-  return List.from(state)..add(action.vehicle);
+  return List.from(state)..add(action.payload);
 }
 
 List<Vehicle> _updateVehicle(List<Vehicle> state, VehicleUpdatedAction action) {
-  return state.where((vehicle) => vehicle.id != action.vehicle.id).toList()
-    ..add(action.vehicle);
+  return state.where((vehicle) => vehicle.id != action.payload.id).toList()
+    ..add(action.payload);
 }
 
 final _isLoading = combineReducers<bool>([

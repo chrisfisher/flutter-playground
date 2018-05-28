@@ -1,40 +1,19 @@
-import 'package:flutter_playground/vehicles/models/vehicle.dart';
+import 'package:flutter_playground/api/actions.dart';
 
-class LoadVehiclesAction {}
+class LoadVehiclesAction extends RequestAction {}
 
-class VehiclesNotLoadedAction {}
+class VehiclesNotLoadedAction extends FailureAction {}
 
-class VehiclesLoadedAction {
-  final List<Vehicle> vehicles;
+class VehiclesLoadedAction extends SuccessAction {}
 
-  VehiclesLoadedAction(this.vehicles);
+class AddVehicleAction extends RequestAction {}
 
-  @override
-  String toString() => 'VehiclesLoadedAction{vehicles: $vehicles}';
-}
+class VehicleNotAddedAction extends FailureAction {}
 
-class AddVehicleAction {}
+class VehicleAddedAction extends SuccessAction {}
 
-class VehicleNotAddedAction {}
+class UpdateVehicleAction extends RequestAction {}
 
-class VehicleAddedAction {
-  final Vehicle vehicle;
+class VehicleNotUpdatedAction extends FailureAction {}
 
-  VehicleAddedAction(this.vehicle);
-
-  @override
-  String toString() => 'VehicleAddedAction{vehicle: $vehicle}';
-}
-
-class UpdateVehicleAction {}
-
-class VehicleNotUpdatedAction {}
-
-class VehicleUpdatedAction {
-  final Vehicle vehicle;
-
-  VehicleUpdatedAction(this.vehicle);
-
-  @override
-  String toString() => 'VehicleUpdatedAction{vehicle: $vehicle}';
-}
+class VehicleUpdatedAction extends SuccessAction {}

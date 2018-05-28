@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:flutter_playground/api.dart';
+import 'package:flutter_playground/api/api.dart';
 import 'package:flutter_playground/vehicles/models/vehicle.dart';
 
 class Api {
