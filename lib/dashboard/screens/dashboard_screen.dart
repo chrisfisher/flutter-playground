@@ -14,6 +14,10 @@ class DashboardScreen extends StatelessWidget {
               child: Text("Vehicles"),
             ),
             RaisedButton(
+              onPressed: () => Navigator.pushNamed(context, "/operators"),
+              child: Text("Operators"),
+            ),
+            RaisedButton(
               onPressed: () => Navigator.pushNamed(context, "/notifications"),
               child: Text("Notifications"),
             ),

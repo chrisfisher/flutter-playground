@@ -12,6 +12,8 @@ import 'package:flutter_playground/notifications/notifications_manager.dart';
 import 'package:flutter_playground/dashboard/screens/dashboard_screen.dart';
 import 'package:flutter_playground/vehicles/containers/vehicle_list_container.dart';
 import 'package:flutter_playground/vehicles/containers/vehicle_container.dart';
+import 'package:flutter_playground/operators/containers/operator_list_container.dart';
+import 'package:flutter_playground/operators/containers/operator_container.dart';
 import 'package:flutter_playground/auth/containers/login_container.dart';
 import 'package:flutter_playground/api/middleware.dart';
 import 'package:flutter_playground/reducer.dart';
@@ -52,10 +54,13 @@ class LogmateAppState extends State<LogmateApp> {
         routes: {
           Routes.login: (context) => LoginContainer(),
           Routes.dashboard: (context) => DashboardScreen(),
-          Routes.notifications: (context) =>
-              NotificationsScreen(notificationsManager: notificationsManager),
+          Routes.notifications: (context) => NotificationsScreen(
+                notificationsManager: notificationsManager,
+              ),
           Routes.vehicles: (context) => VehicleListContainer(),
           Routes.addVehicle: (context) => VehicleContainer(isUpdating: false),
+          Routes.operators: (context) => OperatorListContainer(),
+          Routes.addOperator: (context) => OperatorContainer(),
           Routes.location: (context) => LocationScreen(),
         },
       ),

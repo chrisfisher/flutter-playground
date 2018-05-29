@@ -1,19 +1,23 @@
 import 'package:meta/meta.dart';
-import 'package:flutter_playground/vehicles/models/vehicles_state.dart';
 import 'package:flutter_playground/auth/models/auth_state.dart';
+import 'package:flutter_playground/vehicles/models/vehicles_state.dart';
+import 'package:flutter_playground/operators/models/operators_state.dart';
 
 @immutable
 class AppState {
-  final VehiclesState vehicles;
   final AuthState auth;
+  final VehiclesState vehicles;
+  final OperatorsState operators;
 
   AppState({
-    this.vehicles,
     this.auth,
+    this.vehicles,
+    this.operators,
   });
 
   factory AppState.initialState() => AppState(
-        vehicles: VehiclesState.initialState(),
         auth: AuthState.initialState(),
+        vehicles: VehiclesState.initialState(),
+        operators: OperatorsState.initialState(),
       );
 }
