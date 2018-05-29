@@ -4,9 +4,7 @@ import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_playground/vehicles/screens/vehicle_screen.dart';
 import 'package:flutter_playground/vehicles/models/vehicle.dart';
-import 'package:flutter_playground/vehicles/api.dart';
 import 'package:flutter_playground/vehicles/actions.dart';
-import 'package:flutter_playground/api/actions.dart';
 import 'package:flutter_playground/models.dart';
 
 class VehicleContainer extends StatelessWidget {
@@ -50,28 +48,10 @@ class _ViewModel {
     return _ViewModel(
       isLoading: store.state.vehicles.isLoading,
       addVehicle: (Vehicle vehicle) {
-        store.dispatch(
-          ApiAction(
-            authenticated: true,
-            request: AddVehicleAction(),
-            success: VehicleAddedAction(),
-            failure: VehicleNotAddedAction(),
-            apiCall: Api.addVehicle,
-            apiArgs: [vehicle],
-          ),
-        );
+        store.dispatch(addVehicleAction(vehicle));
       },
       updateVehicle: (Vehicle vehicle) {
-        store.dispatch(
-          ApiAction(
-            authenticated: true,
-            request: UpdateVehicleAction(),
-            success: VehicleUpdatedAction(),
-            failure: VehicleNotUpdatedAction(),
-            apiCall: Api.updateVehicle,
-            apiArgs: [vehicle],
-          ),
-        );
+        store.dispatch(updateVehicleAction(vehicle));
       },
     );
   }

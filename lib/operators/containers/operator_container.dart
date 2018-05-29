@@ -4,9 +4,7 @@ import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_playground/operators/screens/operator_screen.dart';
 import 'package:flutter_playground/operators/models/vehicle_operator.dart';
-import 'package:flutter_playground/operators/api.dart';
 import 'package:flutter_playground/operators/actions.dart';
-import 'package:flutter_playground/api/actions.dart';
 import 'package:flutter_playground/models.dart';
 
 class OperatorContainer extends StatelessWidget {
@@ -44,16 +42,7 @@ class _ViewModel {
     return _ViewModel(
       isLoading: store.state.operators.isLoading,
       addOperator: (VehicleOperator vehicleOperator) {
-        store.dispatch(
-          ApiAction(
-            authenticated: true,
-            request: AddOperatorAction(),
-            success: OperatorAddedAction(),
-            failure: OperatorNotAddedAction(),
-            apiCall: Api.addOperator,
-            apiArgs: [vehicleOperator],
-          ),
-        );
+        store.dispatch(addOperatorAction(vehicleOperator));
       },
     );
   }

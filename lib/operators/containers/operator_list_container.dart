@@ -40,15 +40,7 @@ class _ViewModel {
       vehicleOperators: store.state.operators.vehicleOperators,
       isLoading: store.state.operators.isLoading,
       loadOperators: () {
-        store.dispatch(
-          ApiAction(
-            authenticated: true,
-            request: LoadOperatorsAction(),
-            success: OperatorsLoadedAction(),
-            failure: OperatorsNotLoadedAction(),
-            apiCall: Api.fetchOperators,
-          ),
-        );
+        store.dispatch(loadOperatorsAction());
       },
     );
   }

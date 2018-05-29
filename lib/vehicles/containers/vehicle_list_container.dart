@@ -4,8 +4,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_playground/models.dart';
 import 'package:flutter_playground/vehicles/models/vehicle.dart';
 import 'package:flutter_playground/vehicles/screens/vehicle_list_screen.dart';
-import 'package:flutter_playground/api/actions.dart';
-import 'package:flutter_playground/vehicles/api.dart';
 import 'package:flutter_playground/vehicles/actions.dart';
 
 class VehicleListContainer extends StatelessWidget {
@@ -40,15 +38,7 @@ class _ViewModel {
       vehicles: store.state.vehicles.vehicles,
       isLoading: store.state.vehicles.isLoading,
       loadVehicles: () {
-        store.dispatch(
-          ApiAction(
-            authenticated: true,
-            request: LoadVehiclesAction(),
-            success: VehiclesLoadedAction(),
-            failure: VehiclesNotLoadedAction(),
-            apiCall: Api.fetchVehicles,
-          ),
-        );
+        store.dispatch(loadVehiclesAction());
       },
     );
   }
