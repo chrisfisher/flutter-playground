@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_playground/config.dart';
 
-const String baseUrl = "http://localhost:8081/api/v1/";
-
-Uri buildUri(String path) => Uri.parse(baseUrl + path);
+Uri buildUri(String path) => Uri.parse(AppConfig.apiBaseUrl + path);
 
 Map<String, String> buildHeaders(String accessToken) {
   Map<String, String> headers = {
@@ -30,7 +29,7 @@ Future<http.Response> post(
   String body,
 }) async {
   await Future.delayed(const Duration(seconds: 1));
-  Uri uri = Uri.parse(baseUrl + path);
+  Uri uri = buildUri(path);
   Map<String, String> headers = buildHeaders(accessToken);
   http.Response response = await http.post(uri, body: body, headers: headers);
   return response;
@@ -42,7 +41,7 @@ Future<http.Response> put(
   String body,
 }) async {
   await Future.delayed(const Duration(seconds: 1));
-  Uri uri = Uri.parse(baseUrl + path);
+  Uri uri = buildUri(path);
   Map<String, String> headers = buildHeaders(accessToken);
   http.Response response = await http.put(uri, body: body, headers: headers);
   return response;

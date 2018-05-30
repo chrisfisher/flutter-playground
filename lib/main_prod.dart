@@ -4,7 +4,7 @@ import 'package:flutter_playground/config.dart';
 
 void main() {
   AppConfig.initWithConfig(
-    apiBaseUrl: "http://localhost:8081/api/v1/",
+    apiBaseUrl: "http://logmate-prod.com/api/v1/",
   );
 
   runApp(LogmateApp());
